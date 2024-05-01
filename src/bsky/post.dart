@@ -36,19 +36,15 @@ Future<void> post() async {
     }
   }
 
-  if (templates.isNotEmpty) {
-    final bsky = Bluesky.fromSession(await session);
-    final params = await _preparePostParams(bsky, templates);
-
-    await bsky.feed.postInBulk(params);
-  }
+  await _post(templates);
 }
 
-Future<List<PostParam>> _preparePostParams(
-  final Bluesky bsky,
-  final List<AwsNewsTemplate> templates,
-) async {
+Future<void> _post(final List<AwsNewsTemplate> templates) async {
+  if (templates.isEmpty) return;
+
+  final bsky = Bluesky.fromSession(await session);
   final params = <PostParam>[];
+
   for (final template in templates.reversed) {
     final text = BlueskyText(
       template.build(),
@@ -65,13 +61,12 @@ Future<List<PostParam>> _preparePostParams(
         text: text.value,
         facets: facets.map(Facet.fromJson).toList(),
         embed: await _getEmbedExternal(template.link, bsky),
-        languageTags: ['en'],
         tags: _tags,
       ),
     );
   }
 
-  return params;
+  await bsky.feed.postInBulk(params);
 }
 
 Future<Embed?> _getEmbedExternal(
