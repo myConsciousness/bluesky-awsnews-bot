@@ -1,0 +1,23 @@
+service: bluesky-bot-awsnews
+
+provider:
+  name: aws
+  runtime: provided
+  timeout: 30
+  region: ap-northeast-1
+  ecr:
+    images:
+      appImage:
+        path: ./
+        platform: linux/arm64
+  architecture: arm64
+
+functions:
+  postAwsnews:
+    environment:
+      BLUESKY_IDENTIFIER: ${env:BLUESKY_AWSNEWS_IDENTIFIER}
+      BLUESKY_PASSWORD: ${env:BLUESKY_AWSNEWS_PASSWORD}
+    image:
+      name: appImage
+      command:
+        - post.awsnews
