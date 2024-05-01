@@ -36,10 +36,10 @@ Future<void> post() async {
     }
   }
 
-  final bsky = Bluesky.fromSession(await session);
-  final params = await _preparePostParams(bsky, templates);
+  if (templates.isNotEmpty) {
+    final bsky = Bluesky.fromSession(await session);
+    final params = await _preparePostParams(bsky, templates);
 
-  if (params.isNotEmpty) {
     await bsky.feed.postInBulk(params);
   }
 }
