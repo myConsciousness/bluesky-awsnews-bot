@@ -37,8 +37,11 @@ Future<void> post() async {
   }
 
   final bsky = Bluesky.fromSession(await session);
+  final params = await _preparePostParams(bsky, templates);
 
-  await bsky.feed.postInBulk(await _preparePostParams(bsky, templates));
+  if (params.isNotEmpty) {
+    await bsky.feed.postInBulk(params);
+  }
 }
 
 Future<List<PostParam>> _preparePostParams(
