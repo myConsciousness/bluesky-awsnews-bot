@@ -26,14 +26,13 @@ Future<void> post(final S3 s3) async {
   final templates = <AwsNewsTemplate>[];
   for (int i = 0; i < _kCountPerHour;) {
     final item = items[i];
+    if (headGuid == item.guid) {
+      break;
+    }
 
     if (item.title == null) continue;
     if (item.link == null) continue;
     if (item.pubDate == null) continue;
-
-    if (headGuid == item.guid) {
-      break;
-    }
 
     templates.add(
       AwsNewsTemplate(
