@@ -15,12 +15,12 @@ Future<void> putObject(
       body: utf8.encode(value),
     );
 
-Future<String?> getObject(final S3 s3) async {
+Future<String> getObject(final S3 s3) async {
   try {
     final object = await s3.getObject(bucket: _kBucket, key: _kBucketKey);
 
-    return object.body != null ? utf8.decode(object.body!) : null;
+    return object.body != null ? utf8.decode(object.body!) : '';
   } catch (_) {
-    return null;
+    return '';
   }
 }
