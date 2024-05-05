@@ -46,27 +46,22 @@ Future<void> post(final S3 s3) async {
     i++;
   }
 
-  await _postInBulk(templates);
+  await _post(templates);
   await putObject(s3, channel.items.first.guid!);
 }
 
-Future<void> _postInBulk(final List<AwsNewsTemplate> templates) async {
+Future<void> _post(final List<AwsNewsTemplate> templates) async {
   if (templates.isEmpty) return;
 
   final bsky = Bluesky.fromSession(await session);
-  final params = <PostParam>[];
 
-  for (final template in templates) {
-    params.add(
-      PostParam(
-        text: template.build(),
-        embed: await _getEmbedExternal(template.link, bsky),
-        tags: _kTags,
-      ),
+  for (final template in templates.reversed) {
+    await bsky.feed.post(
+      text: template.build(),
+      embed: await _getEmbedExternal(template.link, bsky),
+      tags: _kTags,
     );
   }
-
-  await bsky.feed.postInBulk(params);
 }
 
 Future<Embed?> _getEmbedExternal(
@@ -111,7 +106,7 @@ final class AwsNewsTemplate {
     buffer
       ..write(title)
       ..write(' ')
-      ..write('($pubDate)');
+      ..write('(${_utcFormat.format(pubDate)})');
 
     return buffer.toString();
   }
