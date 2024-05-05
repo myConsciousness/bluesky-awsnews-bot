@@ -1,7 +1,6 @@
 import 'package:aws_s3_api/s3-2006-03-01.dart';
 import 'package:bluesky/bluesky.dart';
 import 'package:bluesky/cardyb.dart' as cardyb;
-import 'package:bluesky_text/bluesky_text.dart';
 import 'package:dart_rss/dart_rss.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
@@ -10,7 +9,9 @@ import '../aws/aws_s3.dart';
 import 'session.dart';
 
 final _utcFormat = DateFormat('EEE, dd MMM yyyy HH:mm:ss');
-const _tags = ['amazon', 'aws', 'awsnews'];
+
+const _kTags = ['amazon', 'aws', 'awsnews'];
+const _kCountPerHour = 15;
 
 Future<void> post(final S3 s3) async {
   final response = await http.get(Uri.https(
@@ -21,8 +22,11 @@ Future<void> post(final S3 s3) async {
   final headGuid = await getObject(s3);
   final channel = RssFeed.parse(response.body);
 
+  final items = channel.items;
   final templates = <AwsNewsTemplate>[];
-  for (final item in channel.items) {
+  for (int i = 0; i < _kCountPerHour; i++) {
+    final item = items[i];
+
     if (item.title == null) continue;
     if (item.link == null) continue;
     if (item.pubDate == null) continue;
@@ -38,6 +42,8 @@ Future<void> post(final S3 s3) async {
         _utcFormat.parseUtc(item.pubDate!),
       ),
     );
+
+    i++;
   }
 
   await _postInBulk(templates);
@@ -51,22 +57,11 @@ Future<void> _postInBulk(final List<AwsNewsTemplate> templates) async {
   final params = <PostParam>[];
 
   for (final template in templates) {
-    final text = BlueskyText(
-      template.build(),
-      linkConfig: const LinkConfig(
-        excludeProtocol: true,
-        enableShortening: true,
-      ),
-    );
-
-    final facets = await text.links.toFacets();
-
     params.add(
       PostParam(
-        text: text.value,
-        facets: facets.map(Facet.fromJson).toList(),
+        text: template.build(),
         embed: await _getEmbedExternal(template.link, bsky),
-        tags: _tags,
+        tags: _kTags,
       ),
     );
   }

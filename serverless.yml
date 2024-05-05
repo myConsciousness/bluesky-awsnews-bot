@@ -15,8 +15,8 @@ provider:
 functions:
   postAwsnews:
     environment:
-      BLUESKY_IDENTIFIER: ${env:BLUESKY_AWSNEWS_IDENTIFIER}
-      BLUESKY_PASSWORD: ${env:BLUESKY_AWSNEWS_PASSWORD}
+      BLUESKY_AWSNEWS_IDENTIFIER: ${env:BLUESKY_AWSNEWS_IDENTIFIER}
+      BLUESKY_AWSNEWS_PASSWORD: ${env:BLUESKY_AWSNEWS_PASSWORD}
     image:
       name: appImage
       command:
