@@ -24,7 +24,7 @@ Future<void> post(final S3 s3) async {
 
   final items = channel.items;
   final templates = <AwsNewsTemplate>[];
-  for (int i = 0; i < _kCountPerHour; i++) {
+  for (int i = 0; i < _kCountPerHour;) {
     final item = items[i];
 
     if (item.title == null) continue;
