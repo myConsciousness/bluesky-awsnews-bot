@@ -46,8 +46,10 @@ Future<void> post(final S3 s3) async {
     i++;
   }
 
-  await _post(templates);
-  await putObject(s3, channel.items.first.guid!);
+  if (templates.isNotEmpty) {
+    await _post(templates);
+    await putObject(s3, channel.items.first.guid!);
+  }
 }
 
 Future<void> _post(final List<AwsNewsTemplate> templates) async {
