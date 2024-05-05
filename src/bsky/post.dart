@@ -1,3 +1,4 @@
+import 'package:aws_s3_api/s3-2006-03-01.dart';
 import 'package:bluesky/bluesky.dart';
 import 'package:bluesky/cardyb.dart' as cardyb;
 import 'package:bluesky_text/bluesky_text.dart';
@@ -5,47 +6,51 @@ import 'package:dart_rss/dart_rss.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 
+import '../aws/aws_s3.dart';
 import 'session.dart';
 
-final _utcFormat = DateFormat('EEE, dd MMM yyyy HH:mm:ss Z');
+final _utcFormat = DateFormat('EEE, dd MMM yyyy HH:mm:ss');
 const _tags = ['amazon', 'aws', 'awsnews'];
 
-Future<void> post() async {
+Future<void> post(final S3 s3) async {
   final response = await http.get(Uri.https(
     'aws.amazon.com',
     '/about-aws/whats-new/recent/feed',
   ));
 
+  final headGuid = await getObject(s3);
+  final channel = RssFeed.parse(response.body);
+
   final templates = <AwsNewsTemplate>[];
-  for (final item in RssFeed.parse(response.body).items) {
+  for (final item in channel.items) {
     if (item.title == null) continue;
     if (item.link == null) continue;
     if (item.pubDate == null) continue;
 
-    final pubDate = _utcFormat.parseUtc(item.pubDate!);
-    final thirtyMinutesAgo = DateTime.now().toUtc().add(Duration(minutes: -30));
-
-    if (pubDate.isAfter(thirtyMinutesAgo)) {
-      templates.add(
-        AwsNewsTemplate(
-          item.title!,
-          item.link!,
-          pubDate,
-        ),
-      );
+    if (headGuid == item.guid) {
+      break;
     }
+
+    templates.add(
+      AwsNewsTemplate(
+        item.title!,
+        item.link!,
+        _utcFormat.parseUtc(item.pubDate!),
+      ),
+    );
   }
 
-  await _post(templates);
+  await _postInBulk(templates);
+  await putObject(s3, channel.items.first.guid!);
 }
 
-Future<void> _post(final List<AwsNewsTemplate> templates) async {
+Future<void> _postInBulk(final List<AwsNewsTemplate> templates) async {
   if (templates.isEmpty) return;
 
   final bsky = Bluesky.fromSession(await session);
   final params = <PostParam>[];
 
-  for (final template in templates.reversed) {
+  for (final template in templates) {
     final text = BlueskyText(
       template.build(),
       linkConfig: const LinkConfig(
@@ -108,7 +113,10 @@ final class AwsNewsTemplate {
   String build() {
     final buffer = StringBuffer();
 
-    buffer.write(title);
+    buffer
+      ..write(title)
+      ..write(' ')
+      ..write('($pubDate)');
 
     return buffer.toString();
   }
