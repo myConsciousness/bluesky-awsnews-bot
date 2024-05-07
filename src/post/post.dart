@@ -6,8 +6,7 @@ import 'package:bluesky/cardyb.dart' as cardyb;
 import 'package:intl/intl.dart';
 
 import '../aws/aws_s3.dart';
-import 'feed.dart' as feed;
-import 'session.dart';
+import 'feed.dart' as aws;
 
 const _kMaxCountPerHour = 5;
 const _kTags = ['amazon', 'aws', 'awsnews'];
@@ -17,12 +16,15 @@ final _utcFormat = DateFormat('EEE, dd MMM yyyy HH:mm:ss');
 final class AwsNewsPoster {
   const AwsNewsPoster(
     final S3 s3,
-    final feed.Feed feed,
+    final aws.Feed feed,
+    final Session session,
   )   : _s3 = s3,
-        _feed = feed;
+        _feed = feed,
+        _session = session;
 
   final S3 _s3;
-  final feed.Feed _feed;
+  final aws.Feed _feed;
+  final Session _session;
 
   Future<void> execute() async {
     final response = await http.get(Uri.parse(_feed.uri));
@@ -77,7 +79,7 @@ final class AwsNewsPoster {
   Future<void> _post(final List<AwsNewsTemplate> templates) async {
     if (templates.isEmpty) return;
 
-    final bsky = Bluesky.fromSession(await session);
+    final bsky = Bluesky.fromSession(_session);
 
     for (final template in templates.reversed) {
       await bsky.feed.post(
