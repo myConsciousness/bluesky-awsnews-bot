@@ -1,7 +1,7 @@
 service: bluesky-bot-awsnews
 
 custom:
-  postSchedule: cron(0 13-22 ? * MON-FRI *)
+  postSchedule: cron(0 13-23 ? * MON-FRI *)
 
 provider:
   name: aws
