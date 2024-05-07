@@ -9,6 +9,6 @@ Future<void> main() async {
   final s3 = S3(region: Platform.environment['AWS_REGION']!);
 
   await invokeAwsLambdaRuntime([
-    postAwsnews(s3),
+    ...crawlAwsNews(s3),
   ]);
 }

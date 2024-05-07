@@ -1,13 +1,16 @@
 import 'package:aws_lambda_dart_runtime_ns/aws_lambda_dart_runtime_ns.dart';
 import 'package:aws_s3_api/s3-2006-03-01.dart';
 
-import '../bsky/post.dart';
+import '../post/post.dart';
+import '../post/feed.dart';
 
-FunctionHandler postAwsnews(S3 s3) => FunctionHandler(
-      name: 'post.awsnews',
-      action: (context, event) async {
-        await post(s3);
+List<FunctionHandler> crawlAwsNews(S3 s3) => Feed.values.map((feed) {
+      return FunctionHandler(
+        name: feed.name,
+        action: (context, event) async {
+          await AwsNewsPoster(s3, feed).execute();
 
-        return InvocationResult(requestId: context.requestId);
-      },
-    );
+          return InvocationResult(requestId: context.requestId);
+        },
+      );
+    }).toList();

@@ -11,13 +11,291 @@ provider:
         path: ./
         platform: linux/arm64
   architecture: arm64
+  environment:
+    BLUESKY_AWSNEWS_IDENTIFIER: ${env:BLUESKY_AWSNEWS_IDENTIFIER}
+    BLUESKY_AWSNEWS_PASSWORD: ${env:BLUESKY_AWSNEWS_PASSWORD}
+
+custom:
+  crawlSchedule: cron(0 12-22 ? * MON-FRI *)
 
 functions:
-  postAwsnews:
-    environment:
-      BLUESKY_AWSNEWS_IDENTIFIER: ${env:BLUESKY_AWSNEWS_IDENTIFIER}
-      BLUESKY_AWSNEWS_PASSWORD: ${env:BLUESKY_AWSNEWS_PASSWORD}
+  crawlAwsFeed:
     image:
       name: appImage
       command:
-        - post.awsnews
+        - awsFeed
+    events:
+      - eventBridge:
+          schedule: ${self:custom.crawlSchedule}
+  crawlArchitectureFeed:
+    image:
+      name: appImage
+      command:
+        - architectureFeed
+    events:
+      - eventBridge:
+          schedule: ${self:custom.crawlSchedule}
+  crawlAwsCostManagementFeed:
+    image:
+      name: appImage
+      command:
+        - awsCostManagementFeed
+    events:
+      - eventBridge:
+          schedule: ${self:custom.crawlSchedule}
+  crawlApnFeed:
+    image:
+      name: appImage
+      command:
+        - apnFeed
+    events:
+      - eventBridge:
+          schedule: ${self:custom.crawlSchedule}
+  crawlAwsMarketplaceFeed:
+    image:
+      name: appImage
+      command:
+        - awsMarketplaceFeed
+    events:
+      - eventBridge:
+          schedule: ${self:custom.crawlSchedule}
+  crawlBigDataFeed:
+    image:
+      name: appImage
+      command:
+        - bigDataFeed
+    events:
+      - eventBridge:
+          schedule: ${self:custom.crawlSchedule}
+  crawlBusinessProductivityFeed:
+    image:
+      name: appImage
+      command:
+        - businessProductivityFeed
+    events:
+      - eventBridge:
+          schedule: ${self:custom.crawlSchedule}
+  crawlComputeFeed:
+    image:
+      name: appImage
+      command:
+        - computeFeed
+    events:
+      - eventBridge:
+          schedule: ${self:custom.crawlSchedule}
+  crawlContactCenterFeed:
+    image:
+      name: appImage
+      command:
+        - contactCenterFeed
+    events:
+      - eventBridge:
+          schedule: ${self:custom.crawlSchedule}
+  crawlContainersFeed:
+    image:
+      name: appImage
+      command:
+        - containersFeed
+    events:
+      - eventBridge:
+          schedule: ${self:custom.crawlSchedule}
+  crawlDatabaseFeed:
+    image:
+      name: appImage
+      command:
+        - databaseFeed
+    events:
+      - eventBridge:
+          schedule: ${self:custom.crawlSchedule}
+  crawlDesktopAndApplicationStreamingFeed:
+    image:
+      name: appImage
+      command:
+        - desktopAndApplicationStreamingFeed
+    events:
+      - eventBridge:
+          schedule: ${self:custom.crawlSchedule}
+  crawlDeveloperFeed:
+    image:
+      name: appImage
+      command:
+        - developerFeed
+    events:
+      - eventBridge:
+          schedule: ${self:custom.crawlSchedule}
+  crawlDevopsFeed:
+    image:
+      name: appImage
+      command:
+        - devopsFeed
+    events:
+      - eventBridge:
+          schedule: ${self:custom.crawlSchedule}
+  crawlEnterpriseStrategyFeed:
+    image:
+      name: appImage
+      command:
+        - enterpriseStrategyFeed
+    events:
+      - eventBridge:
+          schedule: ${self:custom.crawlSchedule}
+  crawlGameTechFeed:
+    image:
+      name: appImage
+      command:
+        - gameTechFeed
+    events:
+      - eventBridge:
+          schedule: ${self:custom.crawlSchedule}
+  crawlHpcFeed:
+    image:
+      name: appImage
+      command:
+        - hpcFeed
+    events:
+      - eventBridge:
+          schedule: ${self:custom.crawlSchedule}
+  crawlInfrastructureAndAutomationFeed:
+    image:
+      name: appImage
+      command:
+        - infrastructureAndAutomationFeed
+    events:
+      - eventBridge:
+          schedule: ${self:custom.crawlSchedule}
+  crawlIndustriesFeed:
+    image:
+      name: appImage
+      command:
+        - industriesFeed
+    events:
+      - eventBridge:
+          schedule: ${self:custom.crawlSchedule}
+  crawlIotFeed:
+    image:
+      name: appImage
+      command:
+        - iotFeed
+    events:
+      - eventBridge:
+          schedule: ${self:custom.crawlSchedule}
+  crawlMachineLearningFeed:
+    image:
+      name: appImage
+      command:
+        - machineLearningFeed
+    events:
+      - eventBridge:
+          schedule: ${self:custom.crawlSchedule}
+  crawlMtFeed:
+    image:
+      name: appImage
+      command:
+        - mtFeed
+    events:
+      - eventBridge:
+          schedule: ${self:custom.crawlSchedule}
+  crawlMediaFeed:
+    image:
+      name: appImage
+      command:
+        - mediaFeed
+    events:
+      - eventBridge:
+          schedule: ${self:custom.crawlSchedule}
+  crawlMessagingAndTargetingFeed:
+    image:
+      name: appImage
+      command:
+        - messagingAndTargetingFeed
+    events:
+      - eventBridge:
+          schedule: ${self:custom.crawlSchedule}
+  crawlModernizingWithAwsFeed:
+    image:
+      name: appImage
+      command:
+        - modernizingWithAwsFeed
+    events:
+      - eventBridge:
+          schedule: ${self:custom.crawlSchedule}
+  crawlMobileFeed:
+    image:
+      name: appImage
+      command:
+        - mobileFeed
+    events:
+      - eventBridge:
+          schedule: ${self:custom.crawlSchedule}
+  crawlNetworkingAndContentDeliveryFeed:
+    image:
+      name: appImage
+      command:
+        - networkingAndContentDeliveryFeed
+    events:
+      - eventBridge:
+          schedule: ${self:custom.crawlSchedule}
+  crawlOpenSourceFeed:
+    image:
+      name: appImage
+      command:
+        - openSourceFeed
+    events:
+      - eventBridge:
+          schedule: ${self:custom.crawlSchedule}
+  crawlPublicsectorFeed:
+    image:
+      name: appImage
+      command:
+        - publicsectorFeed
+    events:
+      - eventBridge:
+          schedule: ${self:custom.crawlSchedule}
+  crawlQuantumComputingFeed:
+    image:
+      name: appImage
+      command:
+        - quantumComputingFeed
+    events:
+      - eventBridge:
+          schedule: ${self:custom.crawlSchedule}
+  crawlRoboticsFeed:
+    image:
+      name: appImage
+      command:
+        - roboticsFeed
+    events:
+      - eventBridge:
+          schedule: ${self:custom.crawlSchedule}
+  crawlAwsForSapFeed:
+    image:
+      name: appImage
+      command:
+        - awsForSapFeed
+    events:
+      - eventBridge:
+          schedule: ${self:custom.crawlSchedule}
+  crawlSecurityFeed:
+    image:
+      name: appImage
+      command:
+        - securityFeed
+    events:
+      - eventBridge:
+          schedule: ${self:custom.crawlSchedule}
+  crawlStartupsFeed:
+    image:
+      name: appImage
+      command:
+        - startupsFeed
+    events:
+      - eventBridge:
+          schedule: ${self:custom.crawlSchedule}
+  crawlTrainingAndCertificationFeed:
+    image:
+      name: appImage
+      command:
+        - trainingAndCertificationFeed
+    events:
+      - eventBridge:
+          schedule: ${self:custom.crawlSchedule}

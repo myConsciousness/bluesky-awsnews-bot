@@ -2,7 +2,6 @@
 
 ## RSS Feeds
 
-
 | Category            | Blog / Channel Name                           | XML URL                                                             |
 | ------------------- | --------------------------------------------- | ------------------------------------------------------------------- |
 | Amazon Blog         | AWS News Blog                                 | https://aws.amazon.com/blogs/aws/feed                               |
