@@ -16,10 +16,10 @@ provider:
     BLUESKY_AWSNEWS_PASSWORD: ${env:BLUESKY_AWSNEWS_PASSWORD}
 
 custom:
-  crawlSchedule: cron(0 12-22 ? * MON-FRI *)
+  crawlSchedule: cron(0 13-22 ? * MON-FRI *)
 
 functions:
-  crawlAwsFeed:
+  awsFeed:
     image:
       name: appImage
       command:
@@ -27,7 +27,7 @@ functions:
     events:
       - eventBridge:
           schedule: ${self:custom.crawlSchedule}
-  crawlArchitectureFeed:
+  architectureFeed:
     image:
       name: appImage
       command:
@@ -35,7 +35,7 @@ functions:
     events:
       - eventBridge:
           schedule: ${self:custom.crawlSchedule}
-  crawlAwsCostManagementFeed:
+  awsCostManagementFeed:
     image:
       name: appImage
       command:
@@ -43,7 +43,7 @@ functions:
     events:
       - eventBridge:
           schedule: ${self:custom.crawlSchedule}
-  crawlApnFeed:
+  apnFeed:
     image:
       name: appImage
       command:
@@ -51,7 +51,7 @@ functions:
     events:
       - eventBridge:
           schedule: ${self:custom.crawlSchedule}
-  crawlAwsMarketplaceFeed:
+  awsMarketplaceFeed:
     image:
       name: appImage
       command:
@@ -59,7 +59,7 @@ functions:
     events:
       - eventBridge:
           schedule: ${self:custom.crawlSchedule}
-  crawlBigDataFeed:
+  bigDataFeed:
     image:
       name: appImage
       command:
@@ -67,7 +67,7 @@ functions:
     events:
       - eventBridge:
           schedule: ${self:custom.crawlSchedule}
-  crawlBusinessProductivityFeed:
+  businessProductivityFeed:
     image:
       name: appImage
       command:
@@ -75,7 +75,7 @@ functions:
     events:
       - eventBridge:
           schedule: ${self:custom.crawlSchedule}
-  crawlComputeFeed:
+  computeFeed:
     image:
       name: appImage
       command:
@@ -83,7 +83,7 @@ functions:
     events:
       - eventBridge:
           schedule: ${self:custom.crawlSchedule}
-  crawlContactCenterFeed:
+  contactCenterFeed:
     image:
       name: appImage
       command:
@@ -91,7 +91,7 @@ functions:
     events:
       - eventBridge:
           schedule: ${self:custom.crawlSchedule}
-  crawlContainersFeed:
+  containersFeed:
     image:
       name: appImage
       command:
@@ -99,7 +99,7 @@ functions:
     events:
       - eventBridge:
           schedule: ${self:custom.crawlSchedule}
-  crawlDatabaseFeed:
+  databaseFeed:
     image:
       name: appImage
       command:
@@ -107,7 +107,7 @@ functions:
     events:
       - eventBridge:
           schedule: ${self:custom.crawlSchedule}
-  crawlDesktopAndApplicationStreamingFeed:
+  desktopAndApplicationStreamingFeed:
     image:
       name: appImage
       command:
@@ -115,7 +115,7 @@ functions:
     events:
       - eventBridge:
           schedule: ${self:custom.crawlSchedule}
-  crawlDeveloperFeed:
+  developerFeed:
     image:
       name: appImage
       command:
@@ -123,7 +123,7 @@ functions:
     events:
       - eventBridge:
           schedule: ${self:custom.crawlSchedule}
-  crawlDevopsFeed:
+  devopsFeed:
     image:
       name: appImage
       command:
@@ -131,7 +131,7 @@ functions:
     events:
       - eventBridge:
           schedule: ${self:custom.crawlSchedule}
-  crawlEnterpriseStrategyFeed:
+  enterpriseStrategyFeed:
     image:
       name: appImage
       command:
@@ -139,7 +139,7 @@ functions:
     events:
       - eventBridge:
           schedule: ${self:custom.crawlSchedule}
-  crawlGameTechFeed:
+  gameTechFeed:
     image:
       name: appImage
       command:
@@ -147,7 +147,7 @@ functions:
     events:
       - eventBridge:
           schedule: ${self:custom.crawlSchedule}
-  crawlHpcFeed:
+  hpcFeed:
     image:
       name: appImage
       command:
@@ -155,7 +155,7 @@ functions:
     events:
       - eventBridge:
           schedule: ${self:custom.crawlSchedule}
-  crawlInfrastructureAndAutomationFeed:
+  infrastructureAndAutomationFeed:
     image:
       name: appImage
       command:
@@ -163,7 +163,7 @@ functions:
     events:
       - eventBridge:
           schedule: ${self:custom.crawlSchedule}
-  crawlIndustriesFeed:
+  industriesFeed:
     image:
       name: appImage
       command:
@@ -171,7 +171,7 @@ functions:
     events:
       - eventBridge:
           schedule: ${self:custom.crawlSchedule}
-  crawlIotFeed:
+  iotFeed:
     image:
       name: appImage
       command:
@@ -179,7 +179,7 @@ functions:
     events:
       - eventBridge:
           schedule: ${self:custom.crawlSchedule}
-  crawlMachineLearningFeed:
+  machineLearningFeed:
     image:
       name: appImage
       command:
@@ -187,7 +187,7 @@ functions:
     events:
       - eventBridge:
           schedule: ${self:custom.crawlSchedule}
-  crawlMtFeed:
+  mtFeed:
     image:
       name: appImage
       command:
@@ -195,7 +195,7 @@ functions:
     events:
       - eventBridge:
           schedule: ${self:custom.crawlSchedule}
-  crawlMediaFeed:
+  mediaFeed:
     image:
       name: appImage
       command:
@@ -203,7 +203,7 @@ functions:
     events:
       - eventBridge:
           schedule: ${self:custom.crawlSchedule}
-  crawlMessagingAndTargetingFeed:
+  messagingAndTargetingFeed:
     image:
       name: appImage
       command:
@@ -211,7 +211,7 @@ functions:
     events:
       - eventBridge:
           schedule: ${self:custom.crawlSchedule}
-  crawlModernizingWithAwsFeed:
+  modernizingWithAwsFeed:
     image:
       name: appImage
       command:
@@ -219,7 +219,7 @@ functions:
     events:
       - eventBridge:
           schedule: ${self:custom.crawlSchedule}
-  crawlMobileFeed:
+  mobileFeed:
     image:
       name: appImage
       command:
@@ -227,7 +227,7 @@ functions:
     events:
       - eventBridge:
           schedule: ${self:custom.crawlSchedule}
-  crawlNetworkingAndContentDeliveryFeed:
+  networkingAndContentDeliveryFeed:
     image:
       name: appImage
       command:
@@ -235,7 +235,7 @@ functions:
     events:
       - eventBridge:
           schedule: ${self:custom.crawlSchedule}
-  crawlOpenSourceFeed:
+  openSourceFeed:
     image:
       name: appImage
       command:
@@ -243,7 +243,7 @@ functions:
     events:
       - eventBridge:
           schedule: ${self:custom.crawlSchedule}
-  crawlPublicsectorFeed:
+  publicsectorFeed:
     image:
       name: appImage
       command:
@@ -251,7 +251,7 @@ functions:
     events:
       - eventBridge:
           schedule: ${self:custom.crawlSchedule}
-  crawlQuantumComputingFeed:
+  quantumComputingFeed:
     image:
       name: appImage
       command:
@@ -259,7 +259,7 @@ functions:
     events:
       - eventBridge:
           schedule: ${self:custom.crawlSchedule}
-  crawlRoboticsFeed:
+  roboticsFeed:
     image:
       name: appImage
       command:
@@ -267,7 +267,7 @@ functions:
     events:
       - eventBridge:
           schedule: ${self:custom.crawlSchedule}
-  crawlAwsForSapFeed:
+  awsForSapFeed:
     image:
       name: appImage
       command:
@@ -275,7 +275,7 @@ functions:
     events:
       - eventBridge:
           schedule: ${self:custom.crawlSchedule}
-  crawlSecurityFeed:
+  securityFeed:
     image:
       name: appImage
       command:
@@ -283,7 +283,7 @@ functions:
     events:
       - eventBridge:
           schedule: ${self:custom.crawlSchedule}
-  crawlStartupsFeed:
+  startupsFeed:
     image:
       name: appImage
       command:
@@ -291,7 +291,7 @@ functions:
     events:
       - eventBridge:
           schedule: ${self:custom.crawlSchedule}
-  crawlTrainingAndCertificationFeed:
+  trainingAndCertificationFeed:
     image:
       name: appImage
       command:
