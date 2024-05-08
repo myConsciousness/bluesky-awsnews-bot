@@ -9,7 +9,6 @@ import '../aws/aws_s3.dart';
 import 'feed.dart' as aws;
 
 const _kMaxCountPerHour = 5;
-const _kTags = ['amazon', 'aws', 'awsnews'];
 
 final _utcFormat = DateFormat('EEE, dd MMM yyyy HH:mm:ss');
 
@@ -37,7 +36,7 @@ final class AwsNewsPoster {
     final headGuid = await getObject(_s3, bucketKey: guidBucketKey);
 
     final today = DateTime.now().toUtc();
-    final templates = <AwsNewsTemplate>[];
+    final news = <AwsNews>[];
     for (int i = 0; i < _kMaxCountPerHour;) {
       final item = items[i];
       if (headGuid == item.guid) {
@@ -56,30 +55,33 @@ final class AwsNewsPoster {
       if (item.title == null) continue;
       if (item.link == null) continue;
 
-      templates.add(AwsNewsTemplate(item.title!, item.link!));
+      news.add(
+        AwsNews(
+          item.title!,
+          item.link!,
+          item.categories.map((e) => e.value!).take(8).toList(),
+        ),
+      );
+
       i++;
     }
 
-    if (templates.isNotEmpty) {
-      await _post(templates);
+    if (news.isNotEmpty) {
+      await _post(news);
       await putObject(_s3, items.first.guid!, bucketKey: guidBucketKey);
     }
   }
 
-  Future<void> _post(final List<AwsNewsTemplate> templates) async {
-    if (templates.isEmpty) return;
+  Future<void> _post(final List<AwsNews> news) async {
+    if (news.isEmpty) return;
 
     final bsky = Bluesky.fromSession(_session);
 
-    for (final template in templates.reversed) {
+    for (final $news in news.reversed) {
       await bsky.feed.post(
-        text: template.build(),
-        embed: await _getEmbedExternal(template.link, bsky),
-        tags: [
-          ..._kTags,
-          _feed.category,
-          _feed.title,
-        ],
+        text: $news.toString(),
+        embed: await _getEmbedExternal($news.link, bsky),
+        tags: $news.tags,
       );
     }
   }
@@ -110,20 +112,14 @@ final class AwsNewsPoster {
   }
 }
 
-final class AwsNewsTemplate {
-  const AwsNewsTemplate(
+final class AwsNews {
+  const AwsNews(
     this.title,
     this.link,
+    this.tags,
   );
 
   final String title;
   final String link;
-
-  String build() {
-    final buffer = StringBuffer();
-
-    buffer.write(title);
-
-    return buffer.toString();
-  }
+  final List<String> tags;
 }
