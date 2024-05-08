@@ -52,8 +52,7 @@ final class AwsNewsPoster {
       final parsedPubDate = _utcFormat.parse(item.pubDate!);
 
       if (parsedPubDate.year != today.year ||
-          parsedPubDate.month != today.month ||
-          parsedPubDate.day != today.day) {
+          parsedPubDate.month != today.month) {
         //* No more news.
         break;
       }
