@@ -79,7 +79,7 @@ final class AwsNewsPoster {
 
     for (final $news in news.reversed) {
       await bsky.feed.post(
-        text: $news.toString(),
+        text: $news.title,
         embed: await _getEmbedExternal($news.link, bsky),
         tags: $news.tags,
       );
