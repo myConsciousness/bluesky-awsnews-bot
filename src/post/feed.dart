@@ -68,7 +68,7 @@ enum Feed {
     'https://aws.amazon.com/blogs/hpc/feed',
   ),
   infrastructureAndAutomationFeed(
-    'Infrastructure & Automation',
+    'Infrastructure and Automation',
     'https://aws.amazon.com/blogs/infrastructure-and-automation/feed',
   ),
   industriesFeed(
@@ -84,7 +84,7 @@ enum Feed {
     'https://aws.amazon.com/blogs/machine-learning/feed',
   ),
   mtFeed(
-    'AWS Management & Governance Blog',
+    'AWS Management and Governance Blog',
     'https://aws.amazon.com/blogs/mt/feed',
   ),
   mediaFeed(
@@ -92,7 +92,7 @@ enum Feed {
     'https://aws.amazon.com/blogs/media/feed',
   ),
   messagingAndTargetingFeed(
-    'AWS Messaging & Targeting Blog',
+    'AWS Messaging and Targeting Blog',
     'https://aws.amazon.com/blogs/messaging-and-targeting/feed',
   ),
   modernizingWithAwsFeed(
@@ -100,11 +100,11 @@ enum Feed {
     'https://aws.amazon.com/blogs/modernizing-with-aws/feed',
   ),
   mobileFeed(
-    'Front-End Web & Mobile',
+    'Front-End Web and Mobile',
     'https://aws.amazon.com/blogs/mobile/feed',
   ),
   networkingAndContentDeliveryFeed(
-    'Networking & Content Delivery',
+    'Networking and Content Delivery',
     'https://aws.amazon.com/blogs/networking-and-content-delivery/feed',
   ),
   openSourceFeed(
