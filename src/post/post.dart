@@ -34,10 +34,7 @@ final class AwsNewsPoster {
     if (items.isEmpty) return;
 
     final guidBucketKey = 'head_guid_${_feed.name}.txt';
-    final headGuid = await getObject(
-      _s3,
-      bucketKey: guidBucketKey,
-    );
+    final headGuid = await getObject(_s3, bucketKey: guidBucketKey);
 
     final today = DateTime.now().toUtc();
     final templates = <AwsNewsTemplate>[];
@@ -65,12 +62,7 @@ final class AwsNewsPoster {
 
     if (templates.isNotEmpty) {
       await _post(templates);
-
-      await putObject(
-        _s3,
-        items.first.guid!,
-        bucketKey: guidBucketKey,
-      );
+      await putObject(_s3, items.first.guid!, bucketKey: guidBucketKey);
     }
   }
 
