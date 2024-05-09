@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:aws_s3_api/s3-2006-03-01.dart';
 import 'package:bluesky/bluesky.dart';
 import 'package:dart_rss/dart_rss.dart';
@@ -76,14 +78,22 @@ final class AwsNewsPoster {
     if (news.isEmpty) return;
 
     final bsky = Bluesky.fromSession(_session);
-
+    final params = <PostParam>[];
     for (final $news in news.reversed) {
-      await bsky.feed.post(
-        text: $news.title,
-        embed: await _getEmbedExternal($news.link, bsky),
-        tags: $news.tags,
+      params.add(
+        PostParam(
+          text: $news.title,
+          embed: await _getEmbedExternal($news.link, bsky),
+          tags: $news.tags,
+          createdAt: DateTime.now().toUtc(),
+        ),
       );
+
+      //* https://github.com/bluesky-social/atproto/issues/2468
+      sleep(const Duration(microseconds: 5));
     }
+
+    await bsky.feed.postInBulk(params);
   }
 
   Future<Embed?> _getEmbedExternal(
