@@ -19,275 +19,347 @@ provider:
     BLUESKY_AWSNEWS_PASSWORD: ${env:BLUESKY_AWSNEWS_PASSWORD}
 
 functions:
-  awsFeed:
+  aws:
     image:
       name: appImage
       command:
-        - awsFeed
+        - aws
     events:
       - eventBridge:
           schedule: ${self:custom.postSchedule}
-  architectureFeed:
+  architecture:
     image:
       name: appImage
       command:
-        - architectureFeed
+        - architecture
     events:
       - eventBridge:
           schedule: ${self:custom.postSchedule}
-  apnFeed:
+  apn:
     image:
       name: appImage
       command:
-        - apnFeed
+        - apn
     events:
       - eventBridge:
           schedule: ${self:custom.postSchedule}
-  awsMarketplaceFeed:
+  awsMarketplace:
     image:
       name: appImage
       command:
-        - awsMarketplaceFeed
+        - awsMarketplace
     events:
       - eventBridge:
           schedule: ${self:custom.postSchedule}
-  bigDataFeed:
+  bigData:
     image:
       name: appImage
       command:
-        - bigDataFeed
+        - bigData
     events:
       - eventBridge:
           schedule: ${self:custom.postSchedule}
-  businessProductivityFeed:
+  awsInsights:
     image:
       name: appImage
       command:
-        - businessProductivityFeed
+        - awsInsights
     events:
       - eventBridge:
           schedule: ${self:custom.postSchedule}
-  computeFeed:
+  smb:
     image:
       name: appImage
       command:
-        - computeFeed
+        - smb
     events:
       - eventBridge:
           schedule: ${self:custom.postSchedule}
-  contactCenterFeed:
+  businessProductivity:
     image:
       name: appImage
       command:
-        - contactCenterFeed
+        - businessProductivity
     events:
       - eventBridge:
           schedule: ${self:custom.postSchedule}
-  containersFeed:
+  businessIntelligence:
     image:
       name: appImage
       command:
-        - containersFeed
+        - businessIntelligence
     events:
       - eventBridge:
           schedule: ${self:custom.postSchedule}
-  databaseFeed:
+  compute:
     image:
       name: appImage
       command:
-        - databaseFeed
+        - compute
     events:
       - eventBridge:
           schedule: ${self:custom.postSchedule}
-  desktopAndApplicationStreamingFeed:
+  contactCenter:
     image:
       name: appImage
       command:
-        - desktopAndApplicationStreamingFeed
+        - contactCenter
     events:
       - eventBridge:
           schedule: ${self:custom.postSchedule}
-  developerFeed:
+  containers:
     image:
       name: appImage
       command:
-        - developerFeed
+        - containers
     events:
       - eventBridge:
           schedule: ${self:custom.postSchedule}
-  devopsFeed:
+  database:
     image:
       name: appImage
       command:
-        - devopsFeed
+        - database
     events:
       - eventBridge:
           schedule: ${self:custom.postSchedule}
-  enterpriseStrategyFeed:
+  desktopAndApplicationStreaming:
     image:
       name: appImage
       command:
-        - enterpriseStrategyFeed
+        - desktopAndApplicationStreaming
     events:
       - eventBridge:
           schedule: ${self:custom.postSchedule}
-  gameTechFeed:
+  developer:
     image:
       name: appImage
       command:
-        - gameTechFeed
+        - developer
     events:
       - eventBridge:
           schedule: ${self:custom.postSchedule}
-  hpcFeed:
+  devops:
     image:
       name: appImage
       command:
-        - hpcFeed
+        - devops
     events:
       - eventBridge:
           schedule: ${self:custom.postSchedule}
-  infrastructureAndAutomationFeed:
+  enterpriseStrategy:
     image:
       name: appImage
       command:
-        - infrastructureAndAutomationFeed
+        - enterpriseStrategy
     events:
       - eventBridge:
           schedule: ${self:custom.postSchedule}
-  industriesFeed:
+  awsCloudFinancialManagement:
     image:
       name: appImage
       command:
-        - industriesFeed
+        - awsCloudFinancialManagement
     events:
       - eventBridge:
           schedule: ${self:custom.postSchedule}
-  iotFeed:
+  gameTech:
     image:
       name: appImage
       command:
-        - iotFeed
+        - gameTech
     events:
       - eventBridge:
           schedule: ${self:custom.postSchedule}
-  machineLearningFeed:
+  hpc:
     image:
       name: appImage
       command:
-        - machineLearningFeed
+        - hpc
     events:
       - eventBridge:
           schedule: ${self:custom.postSchedule}
-  mtFeed:
+  infrastructureAndAutomation:
     image:
       name: appImage
       command:
-        - mtFeed
+        - infrastructureAndAutomation
     events:
       - eventBridge:
           schedule: ${self:custom.postSchedule}
-  mediaFeed:
+  industries:
     image:
       name: appImage
       command:
-        - mediaFeed
+        - industries
     events:
       - eventBridge:
           schedule: ${self:custom.postSchedule}
-  messagingAndTargetingFeed:
+  iot:
     image:
       name: appImage
       command:
-        - messagingAndTargetingFeed
+        - iot
     events:
       - eventBridge:
           schedule: ${self:custom.postSchedule}
-  modernizingWithAwsFeed:
+  machineLearning:
     image:
       name: appImage
       command:
-        - modernizingWithAwsFeed
+        - machineLearning
     events:
       - eventBridge:
           schedule: ${self:custom.postSchedule}
-  mobileFeed:
+  mt:
     image:
       name: appImage
       command:
-        - mobileFeed
+        - mt
     events:
       - eventBridge:
           schedule: ${self:custom.postSchedule}
-  networkingAndContentDeliveryFeed:
+  media:
     image:
       name: appImage
       command:
-        - networkingAndContentDeliveryFeed
+        - media
     events:
       - eventBridge:
           schedule: ${self:custom.postSchedule}
-  openSourceFeed:
+  messagingAndTargeting:
     image:
       name: appImage
       command:
-        - openSourceFeed
+        - messagingAndTargeting
     events:
       - eventBridge:
           schedule: ${self:custom.postSchedule}
-  publicsectorFeed:
+  modernizingWithAws:
     image:
       name: appImage
       command:
-        - publicsectorFeed
+        - modernizingWithAws
     events:
       - eventBridge:
           schedule: ${self:custom.postSchedule}
-  quantumComputingFeed:
+  ibmRedhat:
     image:
       name: appImage
       command:
-        - quantumComputingFeed
+        - ibmRedhat
     events:
       - eventBridge:
           schedule: ${self:custom.postSchedule}
-  roboticsFeed:
+  dotnet:
     image:
       name: appImage
       command:
-        - roboticsFeed
+        - dotnet
     events:
       - eventBridge:
           schedule: ${self:custom.postSchedule}
-  awsForSapFeed:
+  mobile:
     image:
       name: appImage
       command:
-        - awsForSapFeed
+        - mobile
     events:
       - eventBridge:
           schedule: ${self:custom.postSchedule}
-  securityFeed:
+  networkingAndContentDelivery:
     image:
       name: appImage
       command:
-        - securityFeed
+        - networkingAndContentDelivery
     events:
       - eventBridge:
           schedule: ${self:custom.postSchedule}
-  startupsFeed:
+  openSource:
     image:
       name: appImage
       command:
-        - startupsFeed
+        - openSource
     events:
       - eventBridge:
           schedule: ${self:custom.postSchedule}
-  trainingAndCertificationFeed:
+  publicsector:
     image:
       name: appImage
       command:
-        - trainingAndCertificationFeed
+        - publicsector
+    events:
+      - eventBridge:
+          schedule: ${self:custom.postSchedule}
+  quantumComputing:
+    image:
+      name: appImage
+      command:
+        - quantumComputing
+    events:
+      - eventBridge:
+          schedule: ${self:custom.postSchedule}
+  robotics:
+    image:
+      name: appImage
+      command:
+        - robotics
+    events:
+      - eventBridge:
+          schedule: ${self:custom.postSchedule}
+  awsForSap:
+    image:
+      name: appImage
+      command:
+        - awsForSap
+    events:
+      - eventBridge:
+          schedule: ${self:custom.postSchedule}
+  security:
+    image:
+      name: appImage
+      command:
+        - security
+    events:
+      - eventBridge:
+          schedule: ${self:custom.postSchedule}
+  spacial:
+    image:
+      name: appImage
+      command:
+        - spacial
+    events:
+      - eventBridge:
+          schedule: ${self:custom.postSchedule}
+  startups:
+    image:
+      name: appImage
+      command:
+        - startups
+    events:
+      - eventBridge:
+          schedule: ${self:custom.postSchedule}
+  storage:
+    image:
+      name: appImage
+      command:
+        - storage
+    events:
+      - eventBridge:
+          schedule: ${self:custom.postSchedule}
+  supplyChain:
+    image:
+      name: appImage
+      command:
+        - supplyChain
+    events:
+      - eventBridge:
+          schedule: ${self:custom.postSchedule}
+  trainingAndCertification:
+    image:
+      name: appImage
+      command:
+        - trainingAndCertification
     events:
       - eventBridge:
           schedule: ${self:custom.postSchedule}
