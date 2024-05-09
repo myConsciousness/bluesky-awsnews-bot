@@ -35,14 +35,6 @@ functions:
     events:
       - eventBridge:
           schedule: ${self:custom.postSchedule}
-  awsCostManagementFeed:
-    image:
-      name: appImage
-      command:
-        - awsCostManagementFeed
-    events:
-      - eventBridge:
-          schedule: ${self:custom.postSchedule}
   apnFeed:
     image:
       name: appImage

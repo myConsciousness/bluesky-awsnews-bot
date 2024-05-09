@@ -7,10 +7,6 @@ enum Feed {
     'AWS Architecture Blog',
     'https://aws.amazon.com/blogs/architecture/feed',
   ),
-  awsCostManagementFeed(
-    'AWS Cost Management',
-    'https://aws.amazon.com/blogs/aws-cost-management/feed',
-  ),
   apnFeed(
     'AWS Partner Network (APN) Blog',
     'https://aws.amazon.com/blogs/apn/feed',
