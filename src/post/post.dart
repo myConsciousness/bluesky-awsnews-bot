@@ -34,10 +34,15 @@ final class AwsNewsPoster {
     final items = RssFeed.parse(response.body).items;
     if (items.isEmpty) return;
 
+    final today = DateTime.now().toUtc();
+    if (_isNotNews(today, _utcFormat.parse(items.first.pubDate!))) {
+      //* No more news.
+      return;
+    }
+
     final guidBucketKey = 'head_guid_${_feed.name}.txt';
     final headGuid = await getObject(_s3, bucketKey: guidBucketKey);
 
-    final today = DateTime.now().toUtc();
     final news = <AwsNews>[];
     for (int i = 0; i < _kMaxCountPerHour;) {
       final item = items[i];
@@ -46,16 +51,12 @@ final class AwsNewsPoster {
         break;
       }
 
-      if (item.pubDate == null) continue;
       final parsedPubDate = _utcFormat.parse(item.pubDate!);
 
-      if (today.difference(parsedPubDate).inDays > 2) {
+      if (_isNotNews(today, parsedPubDate)) {
         //* No more news.
         break;
       }
-
-      if (item.title == null) continue;
-      if (item.link == null) continue;
 
       news.add(
         AwsNews(
@@ -73,6 +74,9 @@ final class AwsNewsPoster {
       await putObject(_s3, items.first.guid!, bucketKey: guidBucketKey);
     }
   }
+
+  bool _isNotNews(final DateTime today, final DateTime headPubDate) =>
+      today.difference(headPubDate).inDays > 2;
 
   Future<void> _post(final List<AwsNews> news) async {
     if (news.isEmpty) return;
