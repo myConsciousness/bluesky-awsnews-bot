@@ -6,7 +6,6 @@
 | ------------------- | --------------------------------------------- | ------------------------------------------------------------------- |
 | Amazon Blog         | AWS News Blog                                 | https://aws.amazon.com/blogs/aws/feed                               |
 |                     | AWS Architecture Blog                         | https://aws.amazon.com/blogs/architecture/feed                      |
-|                     | AWS Cost Management                           | https://aws.amazon.com/blogs/aws-cost-management/feed               |
 |                     | AWS Partner Network (APN) Blog                | https://aws.amazon.com/blogs/apn/feed                               |
 |                     | AWS Marketplace                               | https://aws.amazon.com/blogs/awsmarketplace/feed                    |
 |                     | AWS Big Data Blog                             | https://aws.amazon.com/blogs/big-data/feed                          |
