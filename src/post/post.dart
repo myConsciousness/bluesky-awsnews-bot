@@ -1,10 +1,12 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:aws_s3_api/s3-2006-03-01.dart';
 import 'package:bluesky/bluesky.dart';
 import 'package:dart_rss/dart_rss.dart';
 import 'package:http/http.dart' as http;
 import 'package:bluesky/cardyb.dart' as cardyb;
+import 'package:image/image.dart';
 import 'package:intl/intl.dart';
 
 import '../aws/aws_s3.dart';
@@ -108,7 +110,9 @@ final class AwsNewsPoster {
       final preview = await cardyb.findLinkPreview(Uri.parse(url));
 
       final imageBlob = await http.get(Uri.parse(preview.data.image));
-      final uploaded = await bsky.repo.uploadBlob(imageBlob.bodyBytes);
+      final uploaded = await bsky.repo.uploadBlob(
+        _compressImage(imageBlob.bodyBytes),
+      );
 
       return Embed.external(
         data: EmbedExternal(
@@ -123,6 +127,27 @@ final class AwsNewsPoster {
     } catch (_) {
       return null;
     }
+  }
+
+  Uint8List _compressImage(Uint8List fileBytes) {
+    int quality = 100;
+
+    while (fileBytes.length > 976.56 * 1024) {
+      final decodedImage = decodeImage(fileBytes);
+      final encodedImage = encodeJpg(decodedImage!, quality: quality);
+
+      final compressedSize = encodedImage.length;
+
+      if (compressedSize < 976.56 * 1024) {
+        quality += 10;
+      } else {
+        quality -= 15;
+      }
+
+      fileBytes = encodedImage;
+    }
+
+    return fileBytes;
   }
 }
 
