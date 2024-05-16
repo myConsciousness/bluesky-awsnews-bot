@@ -72,8 +72,8 @@ final class AwsNewsPoster {
     }
 
     if (news.isNotEmpty) {
-      await _post(news);
       await putObject(_s3, items.first.guid!, bucketKey: guidBucketKey);
+      await _post(news);
     }
   }
 
