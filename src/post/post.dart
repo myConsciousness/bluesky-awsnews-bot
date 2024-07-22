@@ -2,7 +2,10 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:aws_s3_api/s3-2006-03-01.dart';
+import 'package:bluesky/app_bsky_embed_external.dart';
+import 'package:bluesky/app_bsky_feed_post.dart';
 import 'package:bluesky/bluesky.dart';
+import 'package:bluesky/core.dart';
 import 'package:dart_rss/dart_rss.dart';
 import 'package:http/http.dart' as http;
 import 'package:bluesky/cardyb.dart' as cardyb;
@@ -84,12 +87,15 @@ final class AwsNewsPoster {
     if (news.isEmpty) return;
 
     final bsky = Bluesky.fromSession(_session);
-    final params = <PostParam>[];
+    final records = <PostRecord>[];
     for (final $news in news.reversed) {
-      params.add(
-        PostParam(
+      final embed = await _getEmbedExternal($news.link, bsky);
+      if (embed == null) continue;
+
+      records.add(
+        PostRecord(
           text: $news.title,
-          embed: await _getEmbedExternal($news.link, bsky),
+          embed: embed,
           tags: $news.tags,
           createdAt: DateTime.now().toUtc(),
         ),
@@ -99,10 +105,10 @@ final class AwsNewsPoster {
       sleep(const Duration(microseconds: 5));
     }
 
-    await bsky.feed.postInBulk(params);
+    await bsky.feed.post.createInBulk(records);
   }
 
-  Future<Embed?> _getEmbedExternal(
+  Future<UPostEmbed?> _getEmbedExternal(
     final String url,
     final Bluesky bsky,
   ) async {
@@ -110,17 +116,17 @@ final class AwsNewsPoster {
       final preview = await cardyb.findLinkPreview(Uri.parse(url));
 
       final imageBlob = await http.get(Uri.parse(preview.data.image));
-      final uploaded = await bsky.repo.uploadBlob(
-        _compressImage(imageBlob.bodyBytes),
+      final uploaded = await bsky.atproto.repo.uploadBlob(
+        bytes: _compressImage(imageBlob.bodyBytes),
       );
 
-      return Embed.external(
-        data: EmbedExternal(
-          external: EmbedExternalThumbnail(
+      return UPostEmbed.external(
+        data: External(
+          external: ExternalExternal(
             uri: preview.data.url,
             title: preview.data.title,
             description: preview.data.description,
-            blob: uploaded.data.blob,
+            thumb: uploaded.data.blob,
           ),
         ),
       );
