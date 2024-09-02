@@ -4,13 +4,14 @@ environment:
   sdk: ^3.3.4
 
 dependencies:
-  aws_lambda_dart_runtime_ns: ^0.0.13
+  aws_lambda_dart_runtime_ns: ^0.1.0
   aws_s3_api: ^2.0.0
   bluesky: ^1.0.0-preview.3
   dart_rss: ^3.0.3
   http: '>=0.13.1 <2.0.0'
   intl: ^0.19.0
   image: ^4.0.15
+  archive: ^3.6.1
 
 dev_dependencies:
   lints: ^3.0.0
